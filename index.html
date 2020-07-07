@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" href="style.css">
+	<title>Document</title>
+</head>
+<body>
+	<main class="appMain">
+		<div id="contLetras">
+			<h1>ROJO</h1>
+		</div>
+		<div class="btns">
+			<button class="start">Start</button>
+			<button class="stop">Stop</button>
+		</div>
+	</main>
+	<script>
+		const Colores = ["red", "green", "blue", "yellow", "black"];
+		const Palabras = ["ROJO", "VERDE", "AZUL", "AMARILLO", "NEGRO", "BLANCO"];
+		let timer;
+		const snd = new Audio("./metronomo.mp3");
+		const param = document.querySelector("#param input");
+		
+		function azar(colores, palabras){
+			const color = Math.floor(Math.random() * 5);
+			const palabra = Math.floor(Math.random() * 6);
+			return {palabra: palabras[palabra], color: colores[color]};
+		}
+		
+		
+		function render(obj){
+			const PalabraH1 = document.querySelector("h1");
+			PalabraH1.textContent = obj.palabra;
+			PalabraH1.className = "";
+			PalabraH1.classList.add(obj.color);
+		}
+
+		function start(){
+
+			const Celda = azar(Colores, Palabras);
+			render(Celda);
+			snd.play();
+		}
+
+		const startBtn = document.querySelector(".start");
+		const stopBtn = document.querySelector(".stop");
+		const btns = document.querySelector(".btns");
+
+		startBtn.addEventListener("click", e=> {
+			clearInterval(timer);
+			timer = setInterval(start, 1000);
+		});
+		stopBtn.addEventListener("click", e=> {
+			clearInterval(timer);
+		})
+
+	</script>
+</body>
+</html>
