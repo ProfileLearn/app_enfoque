@@ -16,9 +16,12 @@
 			<button class="stop">Stop</button>
 		</div>
 	</main>
+	<script src="./artyom-source/artyom.window.js"></script>
 	<script>
 		const Colores = ["red", "green", "blue", "yellow", "black"];
 		const Palabras = ["ROJO", "VERDE", "AZUL", "AMARILLO", "NEGRO", "BLANCO"];
+		const palabrasSalidas = [];
+		const palabrasHabladas = [];
 		let timer;
 		const snd = new Audio("./metronomo.mp3");
 		const param = document.querySelector("#param input");
@@ -48,13 +51,63 @@
 		const stopBtn = document.querySelector(".stop");
 		const btns = document.querySelector(".btns");
 
+		// LISTENERS
+
 		startBtn.addEventListener("click", e=> {
 			clearInterval(timer);
 			timer = setInterval(start, 1000);
+			artyom.fatality();
+			UserDictation.start();
 		});
 		stopBtn.addEventListener("click", e=> {
 			clearInterval(timer);
+			UserDictation.stop();
 		})
+
+		//-----------------------------------------------//
+		// RECONOCIMIENTO DE DE VOZ
+
+		function startContinuousArtyom(){
+		    artyom.fatality();// Detener cualquier instancia previa
+
+		    setTimeout(function(){// Esperar 250ms para inicializar
+		         artyom.initialize({
+		            lang:"es-ES",// Más lenguajes son soportados, lee la documentación
+		            continuous:true,// Artyom obedecera por siempre
+		            soundex: true,
+		            listen:true, // Iniciar !
+		            debug:true, // Muestra un informe en la consola
+		            speed:1 // Habla normalmente
+		        }).then(function(){
+		            console.log("Ready to work !");
+		        });
+		    },100);
+		}
+
+		// With ES6,TypeScript etc
+		// import Artyom from './artyom.js';
+
+		// Create a variable that stores your instance
+		const artyom = new Artyom();
+
+		var UserDictation = artyom.newDictation({
+			continuous:true, // Activar modo continuous if HTTPS connection
+			// lang:"es-ES",
+			onResult:function(text){
+		// Mostrar texto en consola
+			console.log(text);
+		},
+		onStart:function(){
+			console.log("Dictado iniciado");
+		},
+		onEnd:function(){
+			alert("Dictado detenido por el usuario");
+		}
+	});
+
+		
+		// Deten el dictado cuando quieras usando:
+		// UserDictation.stop();
 
 	</script>
 </body>
