@@ -1,114 +1,27 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-	<meta charset="UTF-8">
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-	<link rel="stylesheet" href="style.css">
+	<meta charset="UTF-8" />
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="style.css" />
 	<title>Document</title>
 </head>
+
 <body>
 	<main class="appMain">
 		<div id="contLetras">
-			<h1>ROJO</h1>
+			<h1></h1>
 		</div>
 		<div class="btns">
 			<button class="start">Start</button>
 			<button class="stop">Stop</button>
 		</div>
 	</main>
-	<script src="./artyom-source/artyom.window.js"></script>
-	<script>
-		const Colores = ["red", "green", "blue", "yellow", "black"];
-		const Palabras = ["ROJO", "VERDE", "AZUL", "AMARILLO", "NEGRO", "BLANCO"];
-		const palabrasSalidas = [];
-		const palabrasHabladas = [];
-		let timer;
-		const snd = new Audio("./metronomo.mp3");
-		const param = document.querySelector("#param input");
-		
-		function azar(colores, palabras){
-			const color = Math.floor(Math.random() * 5);
-			const palabra = Math.floor(Math.random() * 6);
-			return {palabra: palabras[palabra], color: colores[color]};
-		}
-		
-		
-		function render(obj){
-			const PalabraH1 = document.querySelector("h1");
-			PalabraH1.textContent = obj.palabra;
-			PalabraH1.className = "";
-			PalabraH1.classList.add(obj.color);
-		}
-
-		function start(){
-
-			const Celda = azar(Colores, Palabras);
-			render(Celda);
-			snd.play();
-		}
-
-		const startBtn = document.querySelector(".start");
-		const stopBtn = document.querySelector(".stop");
-		const btns = document.querySelector(".btns");
-
-		// LISTENERS
-
-		startBtn.addEventListener("click", e=> {
-			clearInterval(timer);
-			timer = setInterval(start, 1000);
-			artyom.fatality();
-			UserDictation.start();
-		});
-		stopBtn.addEventListener("click", e=> {
-			clearInterval(timer);
-			UserDictation.stop();
-		})
-
-		//-----------------------------------------------//
-		// RECONOCIMIENTO DE DE VOZ
-
-		function startContinuousArtyom(){
-		    artyom.fatality();// Detener cualquier instancia previa
-
-		    setTimeout(function(){// Esperar 250ms para inicializar
-		         artyom.initialize({
-		            lang:"es-ES",// Más lenguajes son soportados, lee la documentación
-		            continuous:true,// Artyom obedecera por siempre
-		            soundex: true,
-		            listen:true, // Iniciar !
-		            debug:true, // Muestra un informe en la consola
-		            speed:1 // Habla normalmente
-		        }).then(function(){
-		            console.log("Ready to work !");
-		        });
-		    },100);
-		}
-
-		// With ES6,TypeScript etc
-		// import Artyom from './artyom.js';
-
-		// Create a variable that stores your instance
-		const artyom = new Artyom();
-
-		var UserDictation = artyom.newDictation({
-			continuous:true, // Activar modo continuous if HTTPS connection
-			// lang:"es-ES",
-			onResult:function(text){
-		// Mostrar texto en consola
-			console.log(text);
-		},
-		onStart:function(){
-			console.log("Dictado iniciado");
-		},
-		onEnd:function(){
-			alert("Dictado detenido por el usuario");
-		}
-	});
-
-		
-		// Deten el dictado cuando quieras usando:
-		// UserDictation.stop();
-
-	</script>
+	<!-- <script src="./artyom-source/artyom.window.js"></script> -->
+	<script src="./speech.js"></script>
+	<script src="./app.js"></script>
+	<script src="./main.js"></script>
 </body>
+
 </html>
