@@ -2,8 +2,9 @@ const Colores = ["red", "green", "blue", "yellow", "black"];
 const Palabras = ["ROJO", "VERDE", "AZUL", "AMARILLO", "NEGRO", "BLANCO"];
 const PalabrasSalidas = [];
 const snd = new Audio("./metronomo.mp3");
-const milisegundos = 1000;
+const milisegundos = 500;
 let timer;
+let inicio = false;
 let count = 0;
 
 function azar(colores, palabras) {
@@ -19,33 +20,58 @@ function render(obj) {
   PalabraH1.classList.add(obj.color);
 }
 
-function start() {
-  const Celda = azar(Colores, Palabras);
-  render(Celda);
+function sound() {
+  snd.load();
   snd.play();
-  puntaje(Celda.color);
-}
-
-function conteoInicial(){
-
 }
 
 const startBtn = document.querySelector(".start");
 const stopBtn = document.querySelector(".stop");
-const btns = document.querySelector(".btns");
+// const btns = document.querySelector(".btns");
 
-btns.addEventListener("click", e => time(e));
+function start() {
+  const Celda = azar(Colores, Palabras);
+  render(Celda);
+  sound();
+  puntaje(Celda.color);
+}
+
+startBtn.addEventListener("click", time);
+stopBtn.addEventListener("click", stop);
+
+// falta incluir array de texto hablado
 
 function puntaje(obj) {
-  PalabrasSalidas[count] = obj;
+  PalabrasSalidas[count] =  obj;
   console.log(PalabrasSalidas[count]);
   count ++;
 }
 
-function time(e) {
-  procesar()
+function conteoInicial(i) {
+  document.querySelector("h1").textContent = i;
+}
+
+function time() {
   clearInterval(timer);
-  if (e.target == startBtn) {
-    timer = setInterval(start, milisegundos);
+  if (inicio == false) {
+    let i =3;
+    timer = setInterval(()=>{   
+    conteoInicial(i);
+    i--;
+      if (i<1) {
+        clearInterval(timer);
+        inicio = true;
+      }
+    }, milisegundos);
   }
+  if (inicio == true) {
+    procesar(); 
+    timer = setInterval(start, milisegundos);}
+}
+
+function stop(){
+  procesar();
+  clearInterval(timer);
+  inicio = false;
+  PalabraH1.className = "";
 }
