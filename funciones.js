@@ -12,6 +12,7 @@ function render(obj) {
 }
 
 function sound() {
+  snd.pause();
   snd.load();
   snd.play();
 }
