@@ -12,6 +12,18 @@
 	background-color: white;
 }
 
+
+#speedContainer {
+	margin: auto 0;
+	font-weight: bold;
+	font-size: 1.3em;
+}
+#speedContainer input {
+	border: 5px solid black;
+	margin-top: 1em;
+	text-align: center;
+}
+
 h1 {
 	font-weight: bold;
 	font-size: 12em;
@@ -32,6 +44,10 @@ h1 {
 .blue { color: blue; }
 .yellow { color: #ffe500; }
 .black { color: black; }
+
+.hidden {
+	visibility: hidden;
+}
 
 .start, .stop {
 	margin: 1em;
