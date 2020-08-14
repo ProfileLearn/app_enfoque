@@ -19,6 +19,7 @@ function sound() {
 }
 
 function start() {
+  document.querySelector("#instrucciones").classList.add("hidden");
   speedContainer.classList.add("hidden");
   PalabraH1.className = "";
   const Celda = azar(Colores, Palabras);
@@ -46,6 +47,7 @@ function stop(){
   // procesar();
   clearInterval(timer);
   inicio = false;
+  document.querySelector("#instrucciones").classList.remove("hidden");
   speedContainer.classList.remove("hidden");
   count = 0;
   PalabraH1.className = "";
